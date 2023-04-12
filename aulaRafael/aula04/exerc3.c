@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 int main(){
-    char string;
+    char str[];
     int i;
     
-    string = "Gabriel";
+    str = "Gabriel";
     for(i = 0; string[i] != '\0'; i++);
     
     printf("Tamanho string: %d\n", i);
