@@ -8,6 +8,18 @@ typedef enum{
 } bool;
 
 
+typedef struct _bombs{
+    int line;
+    int col;
+    int rad;
+} Bomb;
+
+
+Bomb *criaBomba(){
+    Bomb *b = (Bomb *)calloc(1, sizeof(Bomb));
+    return(b);
+}
+
 char **createMatrix(int line, int column){
     char **matrix = (char **)calloc(line, sizeof(char *));
     for (int i = 0; i < line; i++)
@@ -34,7 +46,7 @@ void insertingBombs(char ***minefield, int posLine, int posCol, int radius, int 
     for (int i = posLine - radius; i <= posLine + radius; i++){
         for (int j = posCol - radius; j <= posCol + radius; j++)
         {
-            if (i < 0 || i > rangeline || j < 0 || j > rangecol)            {
+            if (i < 0 || i > rangeline || j < 0 || j > rangecol){
                 continue;
             } else {
                 *minefield[i][j] = 'P';
@@ -55,13 +67,13 @@ bool checkMinefield(char ***minefield, int line, int col){
 int main(){
     // Vou indicar um quadrado seguro com '\0' pois já está inicializado nesse valor.
     // Vou indicar um quadrado perigoso com P.
-    int line, column, bombs;
+    int line, column, nbombs;
     char **minefield;
 
     // Salvando os valores.
     scanf("%dx%d", &line, &column);
-    scanf("%d", &bombs);
-    if (line < 0 || column < 0 || bombs < 0){
+    scanf("%d", &nbombs);
+    if (line < 0 || column < 0 || nbombs < 0){
         // Input Inválido
         return(-1);
     }
@@ -70,15 +82,15 @@ int main(){
     minefield = createMatrix(line, column);
     
     // Posicionando as bombas.
-    int posLine, posCol, radius;
-    for (int i = 0; i < bombs; i++){
-        scanf("%d %d %d", &posLine, &posCol, &radius);
-        if (posLine < 0 || posCol < 0 || radius < 0)
+    Bomb *bombs = criaBomba();
+    for (int i = 0; i < nbombs; i++){
+        scanf("%d %d %d", &bombs->line, &bombs->col, &bombs->rad);
+        if (bombs->line < 0 || bombs->col < 0 || bombs->rad < 0)
         {
             // Input Inválido
             return(-1);
         }
-        insertingBombs(&minefield, posLine, posCol, radius, line, column);
+        insertingBombs(&minefield, bombs->line, bombs->col, bombs->rad, line, column);
     }
 
     int tankLine, tankCol;
@@ -98,5 +110,6 @@ int main(){
     }
 
     destroyMatrix(&minefield, line);
+    free(bombs);
     return(0);
 }
