@@ -10,7 +10,6 @@ bool ListaSimplesVazia(ListaSimples *inicio)
 
 void ImprimeListaSimples(ListaSimples *inicio)
 {
-  
   while (!ListaSimplesVazia(inicio)){
     printf("%d -->",inicio->elem);
     inicio = inicio->prox; 
