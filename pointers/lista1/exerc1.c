@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 100
+#define MAX 6
 
 
 void buscaMaior(int A[][MAX], int n, int *maior, int *lin, int *col, int *cond){
@@ -20,7 +20,7 @@ void buscaMaior(int A[][MAX], int n, int *maior, int *lin, int *col, int *cond){
 int main(){
     int A[MAX][MAX];
 
-    char *filename = "test1.txt";
+    char *filename = "t.txt";
     FILE *fp = fopen(filename, "r");
 
     if (fp == NULL){
@@ -43,7 +43,7 @@ int main(){
         buscaMaior(A, n, &maior, &lin, &col, &cond);
     }
     
-    printf("O maior elemento eh %d na linha %d e coluna %d\n", maior, lin, col);
+    printf("O maior elemento %d esta na linha %d e coluna %d\n", maior, lin, col);
 
     return(0);
 }
