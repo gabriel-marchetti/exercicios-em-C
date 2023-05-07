@@ -72,7 +72,7 @@ void imprimePolinomio(polinomio *pol)
 {
     noPolinomio *termo = pol;
     if( termo->coef > 0 ){
-        printf("%.2fx^%d ", termo->coef, termo->exp);
+        printf("+ %.2fx^%d ", termo->coef, termo->exp);
     } else {
         printf("- %.2fx^%d ", fabs(termo->coef), termo->exp);
     }

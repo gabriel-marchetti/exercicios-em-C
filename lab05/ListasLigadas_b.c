@@ -12,6 +12,7 @@ typedef struct _polinomio {
 polinomio *criaPolinomio()
 {
     noPolinomio *termo = (noPolinomio *)calloc(1, sizeof(polinomio));
+    return(termo);
 }
 
 
@@ -56,7 +57,7 @@ void imprimePolinomio(polinomio *pol)
 {
     noPolinomio *termo = pol;
     if( termo->coef > 0 ){
-        printf("%.2fx^%d ", termo->coef, termo->exp);
+        printf("+ %.2fx^%d ", termo->coef, termo->exp);
     } else {
         printf("- %.2fx^%d ", fabs(termo->coef), termo->exp);
     }
