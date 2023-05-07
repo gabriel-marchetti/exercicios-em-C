@@ -132,6 +132,19 @@ void substituiCoef(polinomio **p ,int exp, float coef)
 }
 
 
+void destroyPolinomio(polinomio *p)
+{
+    polinomio *q = p;
+    while (p->prox != NULL )
+    {
+        q = p;
+        p = p->prox;
+        free(q);
+    }
+    free(p);
+}
+
+
 int main(int argc, char *argv[])
 {
     FILE *fp;
@@ -196,6 +209,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    destroyPolinomio(pol);
     free(tamanho);
     return(0);
 }

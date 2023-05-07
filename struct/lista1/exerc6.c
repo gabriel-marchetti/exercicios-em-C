@@ -127,7 +127,7 @@ int main(void)
         printf("Opcoes:\n");
         printf("1: Encontra aluno com maior nota na primeira prova.\n");
         printf("2: Encontra aluno com maior media geral.\n");
-        printf("3: Encontra aluno com menor media geral.\n");
+        printf("3: Encontra aluno com menor media geral.\n"); 
         printf("4: Da uma lista com o nome e a condicao do aluno.\n");
         printf("5: imprime informacoes dos alunos.\n");
         scanf("%d", &sw);

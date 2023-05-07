@@ -88,6 +88,20 @@ void imprimeResultado(polinomio *p, double x, double *res)
     return;
 }
 
+
+void destroyPolinomio(polinomio *p)
+{
+    polinomio *q = p;
+    while (p->prox != NULL )
+    {
+        q = p;
+        p = p->prox;
+        free(q);
+    }
+    free(p);
+}
+
+
 int main(int argc, char *argv[])
 {
     FILE *fp;
@@ -116,5 +130,6 @@ int main(int argc, char *argv[])
     imprimeResultado(pol, x, &res);
     printf("%lf \n", res);
 
+    destroyPolinomio(pol);
     return(0);
 }

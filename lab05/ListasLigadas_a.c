@@ -108,6 +108,20 @@ void imprimePolinomio(polinomio *pol)
 }
 
 
+void destroyPolinomio(polinomio *p)
+{
+    polinomio *q = p;
+    while (p->prox != NULL )
+    {
+        q = p;
+        p = p->prox;
+        free(q);
+    }
+    free(p);
+}
+
+
+
 int main(int argc, char *argv[])
 {
     FILE *fp;
@@ -134,5 +148,6 @@ int main(int argc, char *argv[])
     derivaPolinomioa(&pol);
     imprimePolinomio(pol);
 
+    destroyPolinomio(pol);
     return(0);
 }
