@@ -82,7 +82,7 @@ void imprimeResultado(polinomio *p, double x, double *res)
 {
     polinomio *termo = p;
     while(termo->prox != NULL){
-        *res = *res + termo->coef*pow(x, (double)termo->exp);
+        *res = *res + (termo->coef)*pow(x, termo->exp);
         termo = termo->prox;
     }
     *res = *res + termo->coef*pow(x, (double)termo->exp);
@@ -125,11 +125,10 @@ int main(int argc, char *argv[])
         fscanf(fp, "%f %d ", &auxCoef, &auxExp);
         inserePolinomioHierarquico(&pol, auxCoef, auxExp);
     }
-    double x = atoi(argv[2]);
-    
+    double x = atof(argv[2]);
     double res;
     imprimeResultado(pol, x, &res);
-    printf("%lf \n", res);
+    printf("%lf\n", res);
 
     destroyPolinomio(pol);
     return(0);
