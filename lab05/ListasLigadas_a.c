@@ -144,7 +144,6 @@ int main(int argc, char *argv[])
         fscanf(fp, "%f %d ", &auxCoef, &auxExp);
         inserePolinomioHierarquico(&pol, auxCoef, auxExp);
     }
-    imprimePolinomio(pol);
     derivaPolinomioa(&pol);
     imprimePolinomio(pol);
 
