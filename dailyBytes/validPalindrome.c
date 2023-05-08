@@ -45,9 +45,15 @@ char *converteString( char string[M] ){
     char returnString[M];
     while ( string[i] != '\0' ){
         if ( string[i] == '\n'){
+            /* Quebra de linha se mantém */
             string[j] = string[i];
         } else if ((int)string[i] >= 65 && (int)string[i] <= 90){
+            /* Preciso converter as maiúsculas para minúsculas */
             (int)string[i]
+        } else if () {
+            /* Preciso deixar as minúsculas. */
+        } else {
+            /* Preciso remover o resto. */
         }
     }
 }
