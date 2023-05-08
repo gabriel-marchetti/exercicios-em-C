@@ -12,6 +12,7 @@ typedef struct _polinomio {
 polinomio *criaPolinomio()
 {
     noPolinomio *termo = (noPolinomio *)calloc(1, sizeof(polinomio));
+    return(termo);
 }
 
 
@@ -56,7 +57,7 @@ void imprimePolinomio(polinomio *pol)
 {
     noPolinomio *termo = pol;
     if( termo->coef > 0 ){
-        printf("%.2fx^%d ", termo->coef, termo->exp);
+        printf("+ %.2fx^%d ", termo->coef, termo->exp);
     } else {
         printf("- %.2fx^%d ", fabs(termo->coef), termo->exp);
     }
@@ -81,12 +82,26 @@ void imprimeResultado(polinomio *p, double x, double *res)
 {
     polinomio *termo = p;
     while(termo->prox != NULL){
-        *res = *res + termo->coef*pow(x, (double)termo->exp);
+        *res = *res + (termo->coef)*pow(x, termo->exp);
         termo = termo->prox;
     }
     *res = *res + termo->coef*pow(x, (double)termo->exp);
     return;
 }
+
+
+void destroyPolinomio(polinomio *p)
+{
+    polinomio *q = p;
+    while (p->prox != NULL )
+    {
+        q = p;
+        p = p->prox;
+        free(q);
+    }
+    free(p);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -110,11 +125,11 @@ int main(int argc, char *argv[])
         fscanf(fp, "%f %d ", &auxCoef, &auxExp);
         inserePolinomioHierarquico(&pol, auxCoef, auxExp);
     }
-    double x = atoi(argv[2]);
-    
+    double x = atof(argv[2]);
     double res;
     imprimeResultado(pol, x, &res);
-    printf("%lf \n", res);
+    printf("%lf\n", res);
 
+    destroyPolinomio(pol);
     return(0);
 }

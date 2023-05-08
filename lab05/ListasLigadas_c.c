@@ -72,7 +72,7 @@ void imprimePolinomio(polinomio *pol)
 {
     noPolinomio *termo = pol;
     if( termo->coef > 0 ){
-        printf("%.2fx^%d ", termo->coef, termo->exp);
+        printf("+ %.2fx^%d ", termo->coef, termo->exp);
     } else {
         printf("- %.2fx^%d ", fabs(termo->coef), termo->exp);
     }
@@ -129,6 +129,19 @@ void substituiCoef(polinomio **p ,int exp, float coef)
             return;
         }
     }
+}
+
+
+void destroyPolinomio(polinomio *p)
+{
+    polinomio *q = p;
+    while (p->prox != NULL )
+    {
+        q = p;
+        p = p->prox;
+        free(q);
+    }
+    free(p);
 }
 
 
@@ -196,6 +209,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    destroyPolinomio(pol);
     free(tamanho);
     return(0);
 }
