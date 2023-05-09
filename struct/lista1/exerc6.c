@@ -18,8 +18,7 @@ typedef struct _aluno{
 
 void sortAlunos(aluno Classe[M], int tamanho)
 {
-    int aux;
-    aluno salt;
+    int aux; aluno salt;
     for(int i = 0; i < tamanho; i++){
         aux = i;
         salt = Classe[i];
