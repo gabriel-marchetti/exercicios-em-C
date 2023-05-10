@@ -1,6 +1,7 @@
 #define M 100
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef enum _bool{
     false,
@@ -108,7 +109,8 @@ int main(void)
         return(-1);
     }
 
-    aluno classe[5];
+    aluno *classe = (aluno *)calloc(5, sizeof(aluno));
+    
     for (int i = 0; i < 5; i++){
         fscanf(fp, "%d ", &(classe[i].mat));
         fgets(classe[i].nome, M, fp);
@@ -116,6 +118,8 @@ int main(void)
         fscanf(fp, "%f ", &(classe[i].p2));
         fscanf(fp, "%f", &(classe[i].p3));
     }
+    
+
     sortAlunos(classe, 5);
 
     bool cond = true;
@@ -156,6 +160,6 @@ int main(void)
         }
     }
 
-    
+    free(classe);
     return(0);
 }
