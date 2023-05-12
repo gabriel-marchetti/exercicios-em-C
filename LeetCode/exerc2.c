@@ -31,14 +31,41 @@ void addNode(ListNode *linkedList, int val)
 
 ListNode* addTwoNumber( ListNode* l1, ListNode* l2)
 {
+    int size = 0;
+    ListNode *aux = l1;
+    while ( aux->next != NULL){
+        size++;
+        aux = aux->next;
+    }
+    size++;
+
+    int prox = 0;
+    int auxInt;
+    for (int i = 0; i < size; i++){
+        auxInt = l1->val;
+        l1->val = (l1->val + l2->val + prox) % 10;
+        prox = (auxInt + l2->val)/10;
+    }
     
+}
+
+
+void imprimeLista(ListNode *l, int size)
+{
+    for(int i = 0; i < size; i++){
+        printf("%d --> ", l->val);
+        l = l->next;
+    }
 }
 
 
 int main(void)
 {
     ListNode *l1 = NULL, *l2 = NULL;
+    l1 = (ListNode *)malloc(sizeof(ListNode));
+    l2 = (ListNode *)malloc(sizeof(ListNode));
     int size, add;
+
     printf("Size: ");
     scanf("%d", &size);
     
@@ -54,7 +81,11 @@ int main(void)
         scanf("%d", &add);
         addNode(l2, add);
     }
+    imprimeLista(l1, size); printf("\n");
+    imprimeLista(l2, size); printf("\n");
+    addTwoNumber(l1, l2);
+    imprimeLista(l1, size); printf("\n");
 
-
+    free(l1); free(l2);
     return(0);
 }
