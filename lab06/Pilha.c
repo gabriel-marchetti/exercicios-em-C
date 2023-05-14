@@ -42,3 +42,14 @@ int calculaPilha(pilha *pil)
     }
     retorno = retorno + (int)pil->ch;
 }
+
+void destroiPilha(pilha **pil)
+{
+    pilha *ad = NULL;
+    while ((*pil)->next != NULL){
+        ad = *pil;
+        *pil = (*pil)->next;
+        free(ad);
+    }
+    free(pil);
+}
