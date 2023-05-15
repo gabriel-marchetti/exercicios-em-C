@@ -6,29 +6,29 @@ pilha *criaPilha()
     return(p);
 }
 
-void empilha(pilha *pil, char letra)
+void empilha(pilha **pil, char letra)
 {
     pilha *ad;
-    if ( pil == NULL ){
-        pil = criaPilha();
+    if ( *pil == NULL ){
+        *pil = criaPilha();
     } else {
         ad = (pilha *)calloc(1, sizeof(pilha));
         ad->ch = letra;
-        ad->next = pil;
-        pil = ad;
+        ad->next = *pil;
+        *pil = ad;
     }
 }
 
-void desempilha(pilha *pil)
+void desempilha(pilha **pil)
 {
     pilha *ad = NULL;
-    if ( pil == NULL ){
+    if ( *pil == NULL ){
         return;
-    } else if ( pil->next == NULL ){
-        free(pil);
+    } else if ( (*pil)->next == NULL ){
+        free((*pil));
     } else {
-        ad = pil;
-        pil = pil->next;
+        ad = *pil;
+        *pil = (*pil)->next;
         free(ad);
     }
 }
@@ -41,6 +41,7 @@ int calculaPilha(pilha *pil)
         pil = pil->next;
     }
     retorno = retorno + (int)pil->ch;
+    return(retorno);
 }
 
 void destroiPilha(pilha **pil)
