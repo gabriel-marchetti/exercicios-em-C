@@ -45,8 +45,13 @@ ListNode* addTwoNumber( ListNode* l1, ListNode* l2)
         auxInt = l1->val;
         l1->val = (l1->val + l2->val + prox) % 10;
         prox = (auxInt + l2->val)/10;
+        if (l1->next != NULL || l2->next != NULL){
+            l1 = l1->next;
+            l2 = l2->next;
+        }
     }
     
+    return(l1);
 }
 
 
@@ -71,14 +76,14 @@ int main(void)
     
     printf("lista 1 ----------\n ");
     for(int i = 0; i < size; i++){
-        printf("\t%d: ", i);
-        scanf("%d", &add);
+        printf("\t%d:", i);
+        scanf(" %d", &add);
         addNode(l1, add);
     }
     printf("lista 2 ----------\n ");
     for(int i = 0; i < size; i++){
-        printf("\t%d: ", i);
-        scanf("%d", &add);
+        printf("\t%d:", i);
+        scanf(" %d", &add);
         addNode(l2, add);
     }
     imprimeLista(l1, size); printf("\n");
