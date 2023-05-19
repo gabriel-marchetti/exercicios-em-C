@@ -120,17 +120,17 @@ void LeArquivo(char *arq, int *dias, int *atraso, int *esquece){
 }
 
 /* Função solução */
-int Solucao(Fila *Q, int dias, int atraso, int esquece)
+int Solucao(Fila **Q, int dias, int atraso, int esquece)
 {
-  // printf("%d ", dias);
-  InsereFila(Q, dias);
-  if ( dias < esquece - atraso ){
+  int cons = 1;
+  if ( dias < esquece - atraso){
     /* Não tem tempo de lembrar um amigo, então retorna na fila. */
+
   } else {
     for(int i = atraso; i < esquece; i++){
-      if ( dias - i > 0 ){
-        Solucao(Q, dias - i , atraso, esquece);
-      }
+      /* Como codificar cada pessoa do dia para inserir na fila. */
+      InsereFila();
+      Solucao(Q, dias - i, atraso, esquece);
     }
   }
   /* Acredito que o problema está aqui. */
@@ -155,7 +155,8 @@ int main(int argc, char **argv){
 
   /* Solucionando o problema */
 	comeco = clock();
-	resposta = Solucao(Q, dias, atraso, esquece);
+  resposta = 0;
+	Solucao(&Q, dias, atraso, esquece, &resposta);
 	fim = clock();
 	
 	tempo = (((double) (fim - comeco))/CLOCKS_PER_SEC)*1000000;
