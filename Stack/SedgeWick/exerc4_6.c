@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
         //printf("%s", string);
     }
 
-    for ( int i = 0; string[i] != '\0' && string[i] != '\n'; i++){
+    for ( int i = 0; string[i] != '\0' && string[i] != '\n' && string[i] != ' '; i++){
         if ( string[i] = '*'){
             STACKpop(&Q, &lenght);
         } else if (string[i] = ' '){

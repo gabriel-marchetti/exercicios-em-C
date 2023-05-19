@@ -20,7 +20,7 @@ void STACKprint(stack *Q);
 stack *STACKinit(char elem)
 {
     stack *s    = (stack *)calloc(1, sizeof(stack));
-    s->elem = elem;
+    s->elem     = elem;
     return(s);
 }
 
