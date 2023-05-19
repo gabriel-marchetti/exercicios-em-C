@@ -122,18 +122,23 @@ void LeArquivo(char *arq, int *dias, int *atraso, int *esquece){
 /* Função solução */
 int Solucao(Fila *Q, int dias, int atraso, int esquece)
 {
-  int cons = 1;
-  if ( dias < esquece - atraso){
+  // printf("%d ", dias);
+  InsereFila(Q, dias);
+  if ( dias < esquece - atraso ){
     /* Não tem tempo de lembrar um amigo, então retorna na fila. */
-
   } else {
     for(int i = atraso; i < esquece; i++){
-      /* Como codificar cada pessoa do dia para inserir na fila. */
-      InsereFila();
-      Solucao(Q, dias - i, atraso, esquece);
+      if ( dias - i > 0 ){
+        Solucao(Q, dias - i , atraso, esquece);
+      }
     }
   }
-  return(cons);
+  /* Acredito que o problema está aqui. */
+  while ( (Q->val)[Q->ini] > esquece ){
+    RemoveFila(Q);
+  } 
+  
+  return(Q->qtde);
 } 
 
 /* A Função main está pronta */
