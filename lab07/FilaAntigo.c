@@ -121,27 +121,46 @@ void LeArquivo(char *arq, int *dias, int *atraso, int *esquece){
 
 /* Função solução */
 
+void SolAux(Fila *Q, int dias, int atraso, int esquece)
+{
+  if ( dias <= 0 ) return;
+  
+  if ( dias <= esquece - atraso ){
+    /* Insere a pessoa mas ela não consegue lembrar outra pessoa. */
+    InsereFila(Q, dias);
+  } else { /* dias >= esquece - atraso. */
+    InsereFila(Q, dias);
+    for ( int i = atraso; i < esquece; i++){
+      SolAux(Q, dias, atraso, esquece);
+    }
+  }
+}
+
+
 int Solucao(Fila *Q, int dias, int atraso, int esquece)
 {
-    int qtdAtual;
-    InsereFila(Q, dias);
-    for(int diaAtual = dias - 1; diaAtual > 0; diaAtual--){
-        qtdAtual = Q->qtde;
-        for(int j = Q->ini; j < (Q->ini + qtdAtual) ; j = (j + 1) % Q->tam_max){
-            if ( (Q->val)[j] - diaAtual >= esquece){
-                RemoveFila(Q);
-                continue;
-            }
-            if ( (Q->val)[j] - diaAtual >= atraso ){
-                InsereFila(Q, diaAtual);
-            }
-        }
-        if (FilaVazia(Q)){
-            break;
-        }
+  // printf("%d ", dias);
+  SolAux(Q, dias, atraso, esquece);
+  
+  /*
+  InsereFila(Q, dias);
+  if ( dias < esquece - atraso ){
+    // Não tem tempo de lembrar um amigo, então retorna na fila. 
+  } else {
+    for(int i = atraso; i < esquece; i++){
+      if ( dias - i > 0 ){
+        Solucao(Q, dias - i , atraso, esquece);
+      }
     }
+  }
+  */
 
-    return(Q->qtde);
+  /* Acredito que o problema está aqui. */
+  while ( (Q->val)[Q->ini] > esquece ){
+    RemoveFila(Q);
+  }
+  
+  return(Q->qtde);
 } 
 
 /* A Função main está pronta */
