@@ -75,11 +75,12 @@ char STACKpop(stack **s, int *length)
 void STACKprint(stack *Q)
 {
     stack *aux = Q;
-    while (aux->next != NULL){
+
+    while (aux != NULL){
         printf("%c ", aux->elem);
         aux = aux->next;
     }
-    printf("%c", aux->elem);
+    printf("\n");
 }
 
 
