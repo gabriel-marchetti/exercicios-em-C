@@ -21,3 +21,4 @@ void InsereValor(arvbin **T, int insere)
         }
     }
 }
+
