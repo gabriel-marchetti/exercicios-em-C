@@ -17,5 +17,6 @@ void createTree(arvbin **T);
 arvbin *createNode(int info);
 arvbin *createTreeSimPos(int *sim, int *pos, int n);
 int searchPos(int *array, int n, int wanted);
+void printBinaryTree(arvbin *T, int h);
 
 #endif

@@ -1,13 +1,22 @@
-all:
-	gcc ArvoreBinaria.c -c ArvoreBinaria.o
-	gcc Arvore_a.c -c Arvore_a.o
-	gcc -o ArvoreBinaria.o Arvore_a.o main
+FLAGS=-std=c99 -pedantic
+BINARY=bin
+OBJECTS=ArvoreBinaria.o Arvore_a.o
 
-%.c: %.o:
-	gcc -c -o $@ $^
-	
-run teste1:
-	./Arvore_a test1.txt
+all: $(BINARY)
+	echo 'executado'
+
+$(BINARY): $(OBJECTS)
+	gcc -o $@ $^
+
+%.o : %.c 
+	gcc $(FLAGS) -c -o $@ $^
+
+test1:
+	./$(BINARY) test1.txt
+
+test2:
+	./$(BINARY) test2.txt
+
 clean:
-	rm ./*.exe 
 	rm ./*.o
+	rm bin

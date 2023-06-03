@@ -1,4 +1,6 @@
 #include "ArvoreBinaria.h"
+// #include "ArvoreBinaria.c"
+
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +24,10 @@ int main(int argc, char *argv[])
     // Corpo do código.
     arvbin *T = NULL;
     T = createTreeSimPos(sim, pos, n);
+    printBinaryTree(T, 0);
+    // Preciso teste esse código
+    /* Preciso ver ser funciona com mais árvores! */
+    /* Para isso devo fazer vários testes, ajudaria fazer um arquivo e testar as árvores na mão.*/
 
     return 0;
 }
