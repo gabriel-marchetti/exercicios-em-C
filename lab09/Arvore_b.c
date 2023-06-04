@@ -24,14 +24,10 @@ int main(int argc, char *argv[])
     arvbin *T = NULL;
     T = createTreeSimPos(sim, pos, n);
     // printBinaryTree(T, 0);
-    // Preciso teste esse código
-    /* Preciso ver ser funciona com mais árvores! --> deu certo!!!*/
-    /* Para isso devo fazer vários testes, ajudaria fazer um arquivo e testar as árvores na mão.*/
-    arvbin *T2 = invertTree(T);
-    preOrder(T2);   printf("\n");
-    inOrder(T2);    printf("\n");
-    posOrder(T2);   printf("\n");
-    
-    destroyTree(&T); destroyTree(&T2); 
+    int IPL = 0;
+    internalPathLength(T, 0, &IPL);
+    printf("%d\n", IPL);    
+
+    destroyTree(&T);
     return 0;
 }

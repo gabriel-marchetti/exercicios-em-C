@@ -18,5 +18,12 @@ arvbin *createNode(int info);
 arvbin *createTreeSimPos(int *sim, int *pos, int n);
 int searchPos(int *array, int n, int wanted);
 void printBinaryTree(arvbin *T, int h);
+void insertNode(arvbin **T, int info);
+void posOrder(arvbin *T);
+void inOrder(arvbin *T);
+void preOrder(arvbin *T);
+arvbin *invertTree( arvbin *T );
+void destroyTree( arvbin **T );
+void internalPathLength( arvbin *T, int peso, int *IPL );
 
 #endif
