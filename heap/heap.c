@@ -41,7 +41,7 @@ int augmentArray(heap **Heap)
 {
     int newSize = 2 * (*Heap)->tam;
     int *newArray = realloc(*((*Heap)->array), newSize * sizeof(int));
-    if ( newArray = NULL ){
+    if ( newArray == NULL ){
         printf("Falha ao alocar a memória.\n");
         return 0;
     }
@@ -49,6 +49,43 @@ int augmentArray(heap **Heap)
     *((*Heap)->array) = newArray;
     (*Heap)->tamMax = newSize;
     return 1;
+}
+
+
+heap *initializeHeap()
+{
+    heap *H = (heap *)calloc(1, sizeof(heap));
+    int array[1000];
+    H->tamMax=1000;
+    H->tam=0;
+    *(H->array) = array;
+
+    return H;
+}
+
+
+void addLinkedList(linkedlist **ll, int info)
+{
+    linkedlist *addNode = (linkedlist *)calloc(1, sizeof(linkedlist));
+    addNode->info = info;
+    addNode->next = NULL;
+    linkedlist *andante=*ll;
+    if ( *ll == NULL ){
+        (*ll) = addNode;
+    } else {
+        while ( andante->next != NULL ) andante = andante->next;
+        andante->next = addNode;
+    }
+}
+
+
+void printLinkedList(linkedlist *ll)
+{
+    while( ll != NULL ){
+        printf("%d ", ll->info);
+        ll = ll->next;
+    }
+    printf("\n");
 }
 
 /*---------------------*/
@@ -60,8 +97,10 @@ int main(int argc, char *argv[])
     /*---Variáveis---*/
 
     FILE *file=NULL;
-    int condition, continuar=1;
-    heap *Heap;
+    int condition, continuar=1, n, insere;
+    char filename[50];
+    heap *Heap = initializeHeap();
+    linkedlist *ll = NULL;
 
     /*---------------*/
 
@@ -89,6 +128,7 @@ int main(int argc, char *argv[])
         printf("7 - Meld no Heap. \n");
         printf("8 - Size do Heap. \n");
         printf("9 - IsEmpty do Heap. \n"); 
+        printf("10 - Heap como arvore. \n");
         printf("99 - Parar \n");
 
         // Switch //
@@ -111,6 +151,14 @@ int main(int argc, char *argv[])
             sleep(1.5);
             break;
         case 5:
+            printf("Qual o .txt para criar a lista ligada: "); scanf("%s", filename);
+            file = fopen(filename, "r");
+            if ( file == NULL ) printf("Não consegui encontrar o arquivo.\n");
+            fscanf(file, "%d", &n);
+            for( int i = 0; i < n; i++){
+                fscanf(file, "%d", &insere);
+                addLinkedList(&ll, insere);
+            }
             sleep(1.5);
             break;
         case 6:
@@ -123,9 +171,6 @@ int main(int argc, char *argv[])
             sleep(1.5);
             break;
         case 10:
-            sleep(1.5);
-            break;
-        case 11:
             sleep(1.5);
             break;
         case 99:
