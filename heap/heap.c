@@ -18,7 +18,7 @@ typedef struct _arvbin{
 
 typedef struct _linkedList{
     int info;
-    struct _arvbin *next;
+    struct _linkedList *next;
 } linkedlist;
 
 
@@ -69,12 +69,14 @@ void addLinkedList(linkedlist **ll, int info)
     linkedlist *addNode = (linkedlist *)calloc(1, sizeof(linkedlist));
     addNode->info = info;
     addNode->next = NULL;
-    linkedlist *andante=*ll;
+    linkedlist *current = *ll;
     if ( *ll == NULL ){
         (*ll) = addNode;
     } else {
-        while ( andante->next != NULL ) andante = andante->next;
-        andante->next = addNode;
+        while ( current->next != NULL ){
+            current = current->next;
+        } 
+        current->next = addNode;
     }
 }
 
@@ -159,6 +161,10 @@ int main(int argc, char *argv[])
                 fscanf(file, "%d", &insere);
                 addLinkedList(&ll, insere);
             }
+            // printLinkedList(ll);
+            // Deu certo colocar a linkedList do .txt!
+            /* Agora preciso fazer o processo de Heapify de uma linkedList. */
+            
             sleep(1.5);
             break;
         case 6:
