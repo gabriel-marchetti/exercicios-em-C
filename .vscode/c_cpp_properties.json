@@ -27,8 +27,8 @@
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.19041.0",
-            "compilerPath": "cl.exe",
-            "cStandard": "c17",
+            "compilerPath": "/usr/bin/gcc-11",
+            "cStandard": "c89",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-msvc-x64"
         }

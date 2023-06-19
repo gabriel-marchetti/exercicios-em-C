@@ -7,6 +7,14 @@
 #include <string.h>
 #include <unistd.h>
 
+/*--DEFINE-MACROS--*/
+
+#define leftchild(parent) (2*parent+1)
+#define rightchild(parent) (2*parent+2)
+#define parent(child) ( (int)child/2 - 1 )
+
+/*----------------*/
+
 
 /*--Estruturas-de-dados--*/
 
@@ -31,9 +39,40 @@ typedef struct _heap{
 
 /*--Espaço das Funções--*/
 
-void heapify()
+void swap(int **array, int p1, int p2)
 {
+    int aux = (*array)[p2];
+    (*array)[p2] = (*array)[p1];
+    (*array)[p1] = aux;
+}
 
+
+void MaxHeapify(heap *H, int i)
+{
+    int LChild = leftchild(i), RChild = rightchild(i);
+    if ( LChild >= H->tam ) return;
+    else {
+        int largest = i;
+        if ( (H->array)[LChild] > (H->array)[largest] ) largest = LChild;
+        if ( (H->array)[RChild] > (H->array)[largest] ) largest = RChild;
+
+        if ( largest != i ){
+            swap(&(H->array), largest, i);
+            MaxHeapify(H, largest);
+        }
+    }
+}
+
+
+void MinHeapify(heap *H, int i)
+{
+    int LChild = leftchild(i), RChild = rightchild(i);
+    if ( LChild >= H->tam ) return;
+    else {
+        int smallest = i;
+        if ( (H->array)[LChild] < (H->array)[smallest] ) smallest = LChild;
+        if ( (H->array)[LChild] < (H->array)[smallest] ) smallest = RChild;
+    }
 }
 
 
@@ -88,6 +127,36 @@ void printLinkedList(linkedlist *ll)
         ll = ll->next;
     }
     printf("\n");
+}
+
+
+bintree *createTreeWithHeap(heap *H, int k)
+{
+    if ( k >= H->tam  ) return NULL;
+    /* Pensemos no Heap [8,4,6,3,1,2,5] notemos que queremos montar a partir do indice k=0 até k=6.*/
+    /* Desse modo o k não pode ter o valor 7, por exemplo, por isso retorna NULL nesse caso.*/
+    bintree *T = (bintree *)calloc(1, sizeof(bintree));
+    T->info = (H->array)[k]; 
+    T->left = createTreeWithHeap(H, leftchild(k));
+    T->right = createTreeWithHeap(H, rightchild(k));
+
+    return T;
+}
+
+
+void printBinaryTree(bintree *T, int h)
+{
+    /*
+    T: Binary Tree
+    h: Current Tree Height. Starts with zero if you want to print it!
+    */
+    if ( T != NULL ){
+        printBinaryTree(T->right, h+1);
+        for(int i=0; i < h; i++) printf("   ");
+        printf("%d", T->info);
+        printf("\n");
+        printBinaryTree(T->left, h+1);
+    }
 }
 
 /*---------------------*/
