@@ -111,7 +111,7 @@ void MinHeapify(heap *H, int i)
 
 void buildMinHeapify(heap **H)
 {
-    for ( int i = floor((*H)->tam/2) + 1; i >= 0; i-- ){
+    for (int i = floor((*H)->tam/2) + 1; i >= 0; i-- ){
         MinHeapify(*H, i);
     }
 }
