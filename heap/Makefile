@@ -1,5 +1,5 @@
 BIN=heap.c 
-OUT=heap
+OUT=a
 
 all:
 	gcc $(BIN) -o  $(OUT)

@@ -12,6 +12,7 @@
 #define leftchild(parent) (2*parent+1)
 #define rightchild(parent) (2*parent+2)
 #define parent(child) ( (int)child/2 - 1 )
+#define floor(x) ( (int)x/2 )
 
 /*----------------*/
 
@@ -32,10 +33,29 @@ typedef struct _linkedList{
 
 typedef struct _heap{
     int tamMax, tam;
-    int *array[];
+    int *array;
 } heap;
 
 /*-----------------------*/
+
+/*--PROTOTIPAGEM--*/
+
+
+void swap(int **array, int p1, int p2);
+void MaxHeapify(heap *H, int i);
+void buildMaxHeapify(heap **H);
+void MinHeapify(heap *H, int i);
+void buildMinHeapify(heap **H);
+int augmentArray(heap **Heap);
+heap *initializeHeap();
+void addLinkedList(linkedlist **ll, int info);
+void printLinkedList(linkedlist *ll);
+void printArray(int *array, int tam );
+bintree *createTreeWithHeap(heap *H, int k);
+void printBinaryTree(bintree *T, int h);
+void linkedListToArray(linkedlist *ll, int **array);
+int linkedListLength(linkedlist *ll);
+
 
 /*--Espaço das Funções--*/
 
@@ -64,6 +84,14 @@ void MaxHeapify(heap *H, int i)
 }
 
 
+void buildMaxHeapify(heap **H)
+{
+    for (int i = floor((*H)->tam/2) + 1; i >= 0; i--){
+        MaxHeapify(*H, i);
+    }            
+}
+
+
 void MinHeapify(heap *H, int i)
 {
     int LChild = leftchild(i), RChild = rightchild(i);
@@ -71,7 +99,20 @@ void MinHeapify(heap *H, int i)
     else {
         int smallest = i;
         if ( (H->array)[LChild] < (H->array)[smallest] ) smallest = LChild;
-        if ( (H->array)[LChild] < (H->array)[smallest] ) smallest = RChild;
+        if ( (H->array)[RChild] < (H->array)[smallest] ) smallest = RChild;
+
+        if ( smallest != i ){
+            swap(&(H->array), smallest, i);
+            MinHeapify(H, smallest);
+        }
+    }
+}
+
+
+void buildMinHeapify(heap **H)
+{
+    for ( int i = floor((*H)->tam/2) + 1; i >= 0; i-- ){
+        MinHeapify(*H, i);
     }
 }
 
@@ -79,13 +120,13 @@ void MinHeapify(heap *H, int i)
 int augmentArray(heap **Heap)
 {
     int newSize = 2 * (*Heap)->tam;
-    int *newArray = realloc(*((*Heap)->array), newSize * sizeof(int));
+    int *newArray = realloc((*Heap)->array, newSize * sizeof(int));
     if ( newArray == NULL ){
         printf("Falha ao alocar a memória.\n");
         return 0;
     }
     
-    *((*Heap)->array) = newArray;
+    (*Heap)->array = newArray;
     (*Heap)->tamMax = newSize;
     return 1;
 }
@@ -94,10 +135,10 @@ int augmentArray(heap **Heap)
 heap *initializeHeap()
 {
     heap *H = (heap *)calloc(1, sizeof(heap));
-    int array[1000];
+    int *array = (int *)calloc(1000, sizeof(int));
     H->tamMax=1000;
     H->tam=0;
-    *(H->array) = array;
+    (H->array) = array;
 
     return H;
 }
@@ -130,6 +171,14 @@ void printLinkedList(linkedlist *ll)
 }
 
 
+void printArray(int *array, int tam )
+{
+    printf("[ ");
+    for (int i = 0; i < tam; i++) printf("%d ", array[i]);
+    printf(" ]\n");
+}
+
+
 bintree *createTreeWithHeap(heap *H, int k)
 {
     if ( k >= H->tam  ) return NULL;
@@ -157,6 +206,30 @@ void printBinaryTree(bintree *T, int h)
         printf("\n");
         printBinaryTree(T->left, h+1);
     }
+}
+
+
+void linkedListToArray(linkedlist *ll, int **array)
+{
+    int size            = linkedListLength(ll);
+    *array              = (int *)calloc(size, sizeof(int));
+    int index           = 0;
+    while( ll != NULL ){
+        (*array)[index]     = ll->info;
+        ll                  = ll->next;
+        index++;
+    }
+}
+
+
+int linkedListLength(linkedlist *ll)
+{
+    int k = 0;
+    while( ll != NULL ){
+        k++;
+        ll = ll->next;
+    }
+    return k;
 }
 
 /*---------------------*/
@@ -226,14 +299,19 @@ int main(int argc, char *argv[])
             file = fopen(filename, "r");
             if ( file == NULL ) printf("Não consegui encontrar o arquivo.\n");
             fscanf(file, "%d", &n);
-            for( int i = 0; i < n; i++){
+            for(int i = 0; i < n; i++){
                 fscanf(file, "%d", &insere);
                 addLinkedList(&ll, insere);
             }
-            // printLinkedList(ll);
+            fclose(file);
+            printf("Lista Ligada Scaneada: \n"); printLinkedList(ll);
             // Deu certo colocar a linkedList do .txt!
             /* Agora preciso fazer o processo de Heapify de uma linkedList. */
-            
+            linkedListToArray(ll, &(Heap->array));
+            Heap->tam = linkedListLength(ll);
+            buildMaxHeapify(&Heap);
+            printf("Heap: \n");
+            printArray(Heap->array, Heap->tam);
             sleep(1.5);
             break;
         case 6:
