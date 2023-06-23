@@ -1,10 +1,11 @@
 #include "Graph.h"
+// #include "Graph.c"
 
 
 int main(int argc, char *argv[])
 {
     FILE *file;
-    file = fopen(argv[1], "r");
+    file = fopen("input01.txt", "r");
     if (file == NULL){
         printf("Could't find the file.\n");
         return -1;
@@ -23,15 +24,16 @@ int main(int argc, char *argv[])
     // printMatrix(matrix, n);
     // Consegui Salvar a Matrix!
     nodeGraph *floresta = (nodeGraph *)calloc(9, sizeof(nodeGraph));
+    int k = 0;
     for(int i = 0; i < 9; i++){
         floresta[i].label = i;
         floresta[i].custo = INT_MAX;
         floresta[i].pred = NIL;
+        k = 0;
         for(int linhas = 0; linhas < n; linhas++){
-            int k=0;
             for(int colunas = 0; colunas < n; colunas++){
                 if( matrix[linhas][colunas] == 1 ){
-                    floresta[i].vizinhos[k] = colunas;
+                    (floresta[i].vizinhos)[k] = colunas;
                     k++;
                 }
             floresta[i].nviz = k;
@@ -40,15 +42,34 @@ int main(int argc, char *argv[])
     }
 
 
-    // Ctl + K -- Ctl + C
+    // Verificando se minha função tá boa:
+    printf("------------\n");
+    for(int i = 0; i < 9; i++){
+        printf("label: %d\n", floresta[i].label);
+        printf("predecessor: %d\n", floresta[i].pred);
+        printf("custo: %d\n", floresta[i].custo);
+        printf("nviz: %d\n", floresta[i].nviz);
+        printf("------------\n");
+    }
+
+    // Ctl + K -- Ctl + Cs
     // Ctl + K -- Ctl + U
     // for(int i = 0; i < 9; i++){
     //     printf("%d ", floresta[i].label);
     // } printf("\n");
     
 
-    Questao1(&floresta, 1, NIL, 0, &arr, &arr2);
-    printArray(arr, 9); printArray(arr2, 9);
+    // Questao1(&floresta, 1, NIL, 0, &arr, &arr2);
+    // printArray(arr, 9); printArray(arr2, 9);
+    buscaLargura(&floresta, 1);
+    printf("Predecessor: ");
+    for(int i = 0; i < 9; i++){
+        printf("%d ", floresta[i].pred);
+    } printf("\n");
+    printf("Custo: ");
+    for(int i = 0; i < 9; i++){
+        printf("%d ", floresta[i].custo);
+    } printf("\n");
 
     return 0;
 }

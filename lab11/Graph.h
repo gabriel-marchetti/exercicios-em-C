@@ -20,16 +20,25 @@ typedef struct _nodeGraph{
     int vizinhos[9];
 } nodeGraph;
 
+typedef struct _linkedlist{
+    int info;
+    struct _linkedlist *next;
+} linkedlist;
+
 typedef struct _Fila{
     int size, maxSize;
-    int *Queue;
+    linkedlist *head, *tail;
 } fila;
 
 /*==PROTOTIPAGEM==*/
 int **createMatrix(int size);
 void printMatrix(int **matrix, int size);
-void Questao1(nodeGraph **grafo, int label, int pred, int custo, int **arr, int **arr2);
+// void Questao1(nodeGraph **grafo, int label, int pred, int custo, int **arr, int **arr2);
 void printArray(int arr[], int size);
+void insereFila(fila **Q, int inserido);
+int removeFila(fila **Q);
+void buscaLargura(nodeGraph **G, int current);
+
 
 /*================*/
 #endif

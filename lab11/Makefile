@@ -18,6 +18,8 @@ $(BINARY): $(OBJECTS)
 clean:
 	rm -rf $(BINARY) *.o test_out.txt
 
+roda:
+	./bin input01.txt
 
 test: $(BINARY) $(TEST_INPUT)*.txt
 
