@@ -48,7 +48,25 @@ arvbin *buildTree(int tamanho, int *sim, int *pos)
         }
     } // We have the index of -12 in SIM stored at index!
     // So how can i use it to compute the length of simEsq and simDir?
+    int *simEsq = (int *)malloc(index*sizeof(int));
+    int *simDir = (int *)malloc((index-1)*sizeof(int));
+    int *posEsq = (int *)malloc((index)*sizeof(int));
+    int *posDir = (int *)malloc((index-1)*sizeof(int));
 
+    for(int i = 0; i < index; i++){
+        simEsq[i] = sim[i];
+        posEsq[i] = pos[i];
+    }
+
+    for(int i = 0; i < index - 1; i++){
+        simDir[i] = sim[i+index+1];
+        posDir[i] = pos[index+i];
+    }
+
+    subtree->esq = buildTree(index, simEsq, posEsq);
+    subtree->dir = buildTree(index, simDir, posDir);
+
+    free(simEsq); free(simDir); free(posEsq); free(posDir);
     return subtree;
 }
 
@@ -59,6 +77,19 @@ arvbin *createNodeTree(int info)
     T->info     = info;
 
     return T;
+}
+
+
+void printBinaryTree(arvbin *T, int h)
+{
+    // Initialize with zero at h.
+    if ( T != NULL ){
+        printBinaryTree(T->dir, h+1);
+        for(int i=0; i < h; i++) printf("   ");
+        printf("%d", T->info);
+        printf("\n");
+        printBinaryTree(T->esq, h+1);
+    }
 }
 
 

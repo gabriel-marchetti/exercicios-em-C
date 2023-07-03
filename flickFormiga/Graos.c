@@ -5,6 +5,7 @@ int main(int argc, char *argv[])
     /*==========OpenFILE===========*/
     FILE *fp;
     fp = fopen(argv[1], "r");
+    argv[1] = "input01.txt";
     if ( fp == NULL ){
         printf("Could't find the file.\n");
         return -1;
@@ -33,8 +34,8 @@ int main(int argc, char *argv[])
     /*****************************/
     /*COMEÇO AS COISAS LEGAIS*/
     arvbin *tree = NULL;
-    
-
+    tree = buildTree(tamanho, sim, pos);
+    printBinaryTree(tree, 0);
 
     free(sim); free(pos);
     return 0;
